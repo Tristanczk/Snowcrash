@@ -1,0 +1,26 @@
+When we connect, we have a message: you have new mail
+when we go in the folder /var/mail, there is a file level05, with the following line:
+*/2 * * * * su -c "sh /usr/sbin/openarenaserver" - flag05
+which appears to be a cron command to execute the openarenaserver script every 2 minutes
+
+the file openarenaserver contains the following shell script
+#!/bin/sh
+
+for i in /opt/openarenaserver/* ; do
+	(ulimit -t 5; bash -x "$i")
+	rm -f "$i"
+done
+
+which iterates over all files in the folder /opt/openarenaserver,
+sets a time limit of 5 seconds for the execution of the next command, execute the file in bash
+then it removes the file
+
+When we create file in the /opt/openarenaserver folder they are regularly deleted
+this hints that the cron task in the level05 file must be already set up
+
+We can simply write a script in the /opt/openarenaserver folder that we get us the file
+#!/bin/bash
+
+getflag > /tmp/flag
+we then wait that the cron task is executed (our file in /opt/openarenaserver will be deleted)
+And we get the flag in our /tmp/flag file

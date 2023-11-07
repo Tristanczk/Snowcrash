@@ -1,0 +1,55 @@
+in the level08, we have access to an executable level08 that takes a file as argument and that appears to print the content of the file (tested with a dummy file created in /tmp)
+we also have a file token that we have no rights over
+when we look at the executable with strings -d, we see the following lines:
+%s [file to read]
+token
+You may not access '%s'
+Unable to open %s
+Unable to read fd %d
+SO there is likely a variable that is called token and some error message.
+We also see that the program calls the strstr function
+When we try to execute the program on the token file, we have an error message "You may not access 'token'", which is coherent with one of the error message seen in string
+Let's look at the program with gdb:
+gdb level08
+break main
+run token
+disassemble
+The following line are interesting:
+   0x08048589 <+53>:	mov    $0x8048780,%eax
+   0x0804858e <+58>:	mov    %edx,0x4(%esp)
+   0x08048592 <+62>:	mov    %eax,(%esp)
+   0x08048595 <+65>:	call   0x8048420 <printf@plt>
+   0x0804859a <+70>:	movl   $0x1,(%esp)
+   0x080485a1 <+77>:	call   0x8048460 <exit@plt>
+   0x080485a6 <+82>:	mov    0x1c(%esp),%eax
+   0x080485aa <+86>:	add    $0x4,%eax
+   0x080485ad <+89>:	mov    (%eax),%eax
+   0x080485af <+91>:	movl   $0x8048793,0x4(%esp)
+   0x080485b7 <+99>:	mov    %eax,(%esp)
+   0x080485ba <+102>:	call   0x8048400 <strstr@plt>
+   0x080485bf <+107>:	test   %eax,%eax
+   0x080485c1 <+109>:	je     0x80485e9 <main+149>
+   0x080485c3 <+111>:	mov    0x1c(%esp),%eax
+   0x080485c7 <+115>:	add    $0x4,%eax
+   0x080485ca <+118>:	mov    (%eax),%edx
+   0x080485cc <+120>:	mov    $0x8048799,%eax
+
+
+the content at 0x8048780 is put in the register %eax, the content at 0x8048793 is put in the register %esp
+then these 2 registers are passed as argument to the strstr function
+when we look at the values stored in these 2 addresses:
+x/s 0x8048780 > "%s [file to read]\n"
+x/s 0x8048793 > "token"
+So it looks like the program search if "token" is present inside the name of the file.
+And when we look at the value at address 0x8048799
+x/s 0x8048799 > "You may not access '%s'\n"
+It likely returns or print the message "You may not access 'filename'"
+So the program seems to search if there is "token" in the name of the file
+
+We can test by creating some files in /tmp/ and indeed as soon as there is "token" in the filename, we get the error message "You may not access 'filename'"
+
+We therefore need to find a way to make the program read the token file anyway.
+As the only protection is on the name of the file, we can create a symbolic link to the file that we call anything not containing token
+ln -s /home/user/level08/token /tmp/foo (ln -s token /tmp/foo as you can't mix relative and absolute path with ln, both path have to be relative or absolute)
+./level08 /tmp/foo > quif5eloekouj29ke0vouxean
+We can then connect to the flag08 user using su flag08 and the aforementioned password and we launch getflag to get our flag

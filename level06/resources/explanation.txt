@@ -1,0 +1,17 @@
+For level 6, we have a php program and a script that are both owned by the flag06 user
+The program performs some string substitution, replacing square bracket by parentheses and the '.' character by ' x ' and the '@' character by ' y' but only if the sentence is of a specific form, namely within bracket and starting with 'x ' after the opening bracket
+When I try to execute the php code on the local 42 machine, I have the following error message: 
+PHP Warning:  preg_replace(): The /e modifier is no longer supported, use preg_replace_callback instead in /mnt/nfs/homes/tczarnia/Documents/42_Cursus/SnowCrash/level06/level06.php on line 4
+And when I investigate why it is no longer used, it appears that it was due to a security issue. In fact the /e modifier allows to execute php code in your regex, here allowing to execute the y function : https://stackoverflow.com/questions/16986331/can-someone-explain-the-e-regex-modifier
+However, it means that if we find the correct content to give to our file, we should be able to execute the getflag command in bash from our php program
+
+we look at this regex substitution : $a = preg_replace("/(\[x (.*)\])/e", "y(\"\\2\")", $a)
+"/(\[x (.*)\])/e", the y function will take as argument the 2 part of the regex matching, namely the matching of \[x (.*)\]
+which means that the text must be inside brackets and start with 'x '
+The main problem is that the /e regex already calls a function that we cannot modify, so we cannot directly execute the code we want
+However, we can exploit the variable substitution from the shell by creating a file containing [x ${`getflag`}]
+PHP will try to access the variable, running the getflag command and telling us that the subsequent variable is undefined, giving us the flag
+
+level06@SnowCrash:~$ ./level06 /tmp/test
+PHP Notice:  Undefined variable: Check flag.Here is your token : wiok45aaoguiboiki2tuin6ub
+ in /home/user/level06/level06.php(4) : regexp code on line 1
