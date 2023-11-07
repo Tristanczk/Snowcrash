@@ -82,4 +82,5 @@ level09@SnowCrash:~$ od token -An -tu1
 We can ignore the ending 10, which is just the \n at the end of the file
 
 When using a simple python script to decode it, we get the following password: f3iji1ju5yuevaus41q1afiuq
-It works, we can now log into the flag09 user and get the flag
+It works, we can now log into the flag09 user and get the flag.
+And with that ends the mandatory part
