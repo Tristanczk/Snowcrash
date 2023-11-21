@@ -50,6 +50,6 @@ We can test by creating some files in /tmp/ and indeed as soon as there is "toke
 
 We therefore need to find a way to make the program read the token file anyway.
 As the only protection is on the name of the file, we can create a symbolic link to the file that we call anything not containing token
-ln -s /home/user/level08/token /tmp/foo (ln -s token /tmp/foo as you can't mix relative and absolute path with ln, both path have to be relative or absolute)
+ln -s /home/user/level08/token /tmp/foo (ln -s token /tmp/foo doesn't work as you can't mix relative and absolute path with ln, both path have to be relative or absolute)
 ./level08 /tmp/foo > quif5eloekouj29ke0vouxean
 We can then connect to the flag08 user using su flag08 and the aforementioned password and we launch getflag to get our flag
