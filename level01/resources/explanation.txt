@@ -3,6 +3,7 @@ And in this file, while the password hash of all accounts is hidden (replaced by
 The hash passwd is : 42hDRfypTqqnw
 As hinted by the name of the previous file, we can use John the Ripper in order to decipher the hash
 In order to use john on 42 computers, I set up another VM running on Kali Linux (john pre-installed and come with wordlist to use with john)
+https://www.kali.org/get-kali/#kali-virtual-machines
 Then we can copy the hash in a file hash.txt, specifying an username before "flag01:42hDRfypTqqnw"
 Using the command john hash.txt --show, we manage to crack the hash, giving us the following password: abcdefg
 Using getflag, we recover the flag: f2av5il02puano7naaf6adaaf
