@@ -1,4 +1,4 @@
-on level 04 we have access to a perl cgi script that is owned by the flag04 user
+on level 04 we have access to a perl cgi script that is owned by the flag04 user. The script takes an argument x and will print `echo $y 2>&1`
 similarly to level03, if we manage to use this cgi script to execute the getflag command, we should be able to get the flag00
 we also see in the perl script that it is set up for localhost on port 4747
 We can therefore use telnet to connect to localhost on port 4747: telnet localhost 4747
