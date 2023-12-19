@@ -18,9 +18,8 @@ then it removes the file
 When we create file in the /opt/openarenaserver folder they are regularly deleted
 this hints that the cron task in the level05 file must be already set up
 
-We can simply write a script in the /opt/openarenaserver folder that we get us the file
+We can simply write a script in the /opt/openarenaserver folder that will get us the flag
 #!/bin/bash
 
-getflag > /tmp/flag
-we then wait that the cron task is executed (our file in /opt/openarenaserver will be deleted)
-And we get the flag in our /tmp/flag file
+getflag | wall
+we then wait that the cron task is executed and the flag will be displayed

@@ -2,7 +2,7 @@ on level03, we have an executable called level03, that when launched prints "Exp
 when we look at the executable with the command strings -d, we see that it uses the command echo to print "Exploit me"
 as the program is owned by the flag03 user, we can replace echo by the command getflag in order to get the flag as if we were logged as the flag03 user
 we create a file named echo, for instance in the /tmp folder
-using nano we write /bin/getflag in the file
+using nano we write /bin/getflag in the file, then chmod +x /tmp/echo for it to be executable
 and then we modify the PATH environment variable so that it considers /tmp first, export PATH=/tmp:$PATH
 that way, when the program calls echo, it will actually executes the getflag command
 we run the program and we get the flag

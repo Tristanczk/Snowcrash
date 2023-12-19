@@ -1,5 +1,5 @@
 In level09, we also have an executable level09 and a token file
-This type, we can read the token file, but the content contains non displayable characters
+This time, we can read the token file, but the content contains non displayable characters
 
 ```bash
 level09@SnowCrash:~$ cat token 

@@ -30,7 +30,7 @@ telnet 127.0.0.1 5151
 we are prompted for the password but if we enter 'NotSoEasy', we get the 'Erf nope...' answer, which is unexpected
 
 It seems that finding the password is not the way to go. We can try to inject a command when the script prompts us for the password, entering this as password:
-`getflag` > /tmp/foo
+`getflag` > /tmp/foo (or `getflag` | wall)
 
 and io.popen must be susceptible to command injection because when we check the /tmp/foo file
 ```bash
