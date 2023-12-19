@@ -1,11 +1,7 @@
 In level 7, we also have an executable that is owned by the flag07 user
 When we launch the program, it only prints level07 to the console
-Now, when we have a look at the program using strings -d, we see the 2 following lines :
-LOGNAME
-/bin/echo %s
-and a bit above, we also see a call to the getenv function.
-If we look at the environment, we see that there is an environment variable logname with the value of level07
-The program must most likely echo the content of the logname variable
+Looking at the executable through gdb, we can see it calls getenv to get the value of the following LOGNAME
+It thens insert that value inside a command string to execute /bin/echo %s
 We can test this hypothesis by changing the content of the logname variable and sure enough when we do, it prints the new content
 Therefore, we just have to exploit it in order to execute the getflag command from the program
 We can execute a command in echo in bash by doing something like echo "some text $(command)"

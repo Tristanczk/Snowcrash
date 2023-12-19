@@ -1,10 +1,8 @@
-in level02, we have a file level02.pcap which is available in our home folder
-this type of file is usually used to store network traffic data and can be analyzed through wireshark
-we will use wireshark to analyse it on our kali vm, which supposes to transfer the file to the machine.
+In level02, we have a file level02.pcap which is available in our home folder
+This type of file is usually used to store network traffic data and can be analyzed through scapy
 For this, we use the scp command to transfer it on our local host:
 scp -P 4242 level02@192.168.56.102:/home/user/level02/level02.pcap Documents/level02.pcap
-And then we transfer it on our kali machine : scp Documents/level02.pcap kali@192.168.56.103:/home/kali
-On kali, we open wireshark with the wireshark command, then file > open > level02.pcap
-Then we use the follow TCP stream of wireshark and we see this line:
-Password: ft_wandr...NDRel.L0L in ASCII, the '.' correspond to non printable character, and if we look at the hexadecimal code, we see that all 4 are 7f which corresponds to (DEL) in the ASCII table
-As a result, we have the following password ft_waNDReL0L
+Then we run the read_pcap script and pipe its output into cat -e, where we can see the following output:
+Password: ft_wandr^?^?^?NDRel^?L0L
+the '^?' correspond to non printable character DEL
+As a result, we have the following password: ft_waNDReL0L
