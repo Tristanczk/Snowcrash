@@ -1,5 +1,6 @@
 on level03, we have an executable called level03, that when launched prints "Exploit me"
-when we look at the executable with the command strings -d, we see that it uses the command echo to print "Exploit me"
+when we look at the executable with gdb, we see that it uses the command "/usr/bin/env echo" to print "Exploit me"
+since it uses /usr/bin/env, it is not running the builtin echo, therefore we can override the echo with our own command by modifying PATH
 as the program is owned by the flag03 user, we can replace echo by the command getflag in order to get the flag as if we were logged as the flag03 user
 we create a file named echo, for instance in the /tmp folder
 using nano we write /bin/getflag in the file, then chmod +x /tmp/echo for it to be executable
